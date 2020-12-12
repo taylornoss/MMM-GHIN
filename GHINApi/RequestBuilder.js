@@ -1,4 +1,4 @@
-import { USERNAME, PASSWORD } from "./Constants"
+import { USERNAME, PASSWORD } from './Constants'
 
 const addLogin = () => {
   return `username=${USERNAME}&password=${PASSWORD}`
@@ -69,7 +69,8 @@ export function buildGolferRequest(ghinNumber, association = 0, club = 0, lastNa
   return query
 }
 
-
 export function buildHandicapHistoryRequest(ghinNumber, dateBegin, dateEnd, revCount = 0) {
-  return `?` + addLogin() + addGHINNumber(ghinNumber) + addDateBegin(dateBegin) + addDateEnd(dateEnd) + addRevCount(revCount)
+  return (
+    `?` + addLogin() + addGHINNumber(ghinNumber) + addDateBegin(dateBegin) + addDateEnd(dateEnd) + addRevCount(revCount)
+  )
 }

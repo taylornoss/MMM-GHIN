@@ -1,32 +1,57 @@
+/* Magic Mirror2
+ * Module: GHIN
+ *
+ * By Clint Decker https://github.com/C-DECK
+ * MIT Licensed.
+ */
 Module.register('MMM-NFL', {
+  handicap: 0.0,
   // Default module config.
-	defaults: {
-        updateInterval: 1000 * 60, // every minute
-		initialLoadDelay: 0,
-		animationSpeed: 1000 * 0.25,
+  defaults: {
+    updateInterval: 1000 * 60,
+    ghinNumber: 0,
   },
-  
-  // Define start sequence.
-	start: function() {
-        Log.info("Starting module: " + this.name);
-        // Loop infinitely
-		this.loop();
+
+  getStyles: function () {
+    return ['MMM-GHIN.css']
   },
-  
-  getDom: function() {
-		var wrapper = document.createElement("div");
 
-		// if user supplied message text in its module config, use it
-		if(this.config.hasOwnProperty("message")){
-			// using text from module config block in config.js
-			wrapper.innerHTML = this.config.message;
-		}
-		else{
-		// use hard coded text
-			wrapper.innerHTML = "Hello world!";
-		}
+  start: function () {
+    Log.info('Starting module: ' + this.name)
+    this.getHandicap()
+    this.scheduleUpdate()
+  },
 
-		// pass the created content back to MM to add to DOM.
-		return wrapper;
-	},
+  scheduleUpdate: function (delay) {
+    var nextLoad = this.config.updateInterval
+    if (typeof delay !== 'undefined' && delay >= 0) {
+      nextLoad = delay
+    }
+
+    var self = this
+    setInterval(function () {
+      self.getHandicap()
+    }, nextLoad)
+  },
+
+  getDom: function () {
+    var wrapper = document.createElement('div')
+
+    wrapper.innerHTML = `${this.handicap}`
+    wrapper.className = 'handicap-score'
+
+    // pass the created content back to MM to add to DOM.
+    return wrapper
+  },
+
+  getHandicap: function () {
+    this.sendSocketNotification('GET_HANDICAP', this.config.ghinNumber)
+  },
+
+  socketNotificationReceived: function (notification, payload) {
+    if (notification === 'HANDICAP_RESULT') {
+      this.handicap = payload
+      this.updateDom()
+    }
+  },
 })
