@@ -5,21 +5,21 @@ This module displays your official golf handicap on your MagicMirror.
 
 ## How to use this module
 
-1. clone this repo with the following command: `git clone https://github.com/C-Deck/MMM-GHIN.git`
-1. install all the npm modules with either `yarn install` or `npm install`
-1. update your [Magic Mirror Config](https://github.com/MichMich/MagicMirror/blob/master/config/config.js.sample), by adding the following object:
+1. Clone this repo with the following command: `git clone https://github.com/C-Deck/MMM-GHIN.git`
+1. Install all the npm modules with either `yarn install` or `npm install`
+1. Update your [Magic Mirror Config](https://github.com/MichMich/MagicMirror/blob/master/config/config.js.sample), by adding the following object:
    To use this module, add it to the modules array in the `config/config.js` file:
 
 ```javascript
 modules: [
   {
     module: 'MMM-GHIN',
-        position: 'bottom_bar',
+    position: 'bottom_bar',
     config: {
-      ghinNumber: 00000000', // Your GHIN Number
-      updateInterval: 37000 // update interval in milliseconds
-    }
-  }
+      ghinNumber: '00000000', // Your GHIN Number
+      updateInterval: 37000, // update interval in milliseconds
+    },
+  },
 ]
 ```
 
@@ -36,7 +36,7 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ## Author
 
-**Clint**
+**Clint Decker**
 
 - [github](https://www.github.com/C-Deck)
 
