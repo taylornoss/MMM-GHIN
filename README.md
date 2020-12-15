@@ -1,7 +1,7 @@
 # Magic Mirror Module GHIN
 
 The `GHIN` module is a <a href="https://github.com/MichMich/MagicMirror">MagicMirror</a> addon.
-This module displays your official golf handicap on your MagicMirror.
+This module displays your official USGA handicap on your MagicMirror.
 
 ## How to use this module
 
@@ -26,7 +26,7 @@ modules: [
 ## 🛠️ Config
 
 - `module` the name of the module you are installing.
-- `position` where you want the mmm-ghin module to appear.
+- `position` where you want the handicap value to appear
 - `ghinNumber` Your specific GHIN Number
 - `updateInterval` default is set to 5 minutes
 
