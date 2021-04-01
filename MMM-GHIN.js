@@ -1,12 +1,10 @@
-var Notifcations = require('./Notifications')
-
 /* Magic Mirror2
  * Module: GHIN
  *
  * By Clint Decker https://github.com/C-DECK
  * MIT Licensed.
  */
-Module.register('MMM-NFL', {
+Module.register('MMM-GHIN', {
   handicap: 0.0,
   // Default module config.
   defaults: {
@@ -48,21 +46,24 @@ Module.register('MMM-NFL', {
   },
 
   loginUser: function () {
-    this.sendSocketNotification(Notifcations.LOGIN_USER, this.config.ghinNumber)
+    Log.info("Called login");
+    this.sendSocketNotification('LOGIN_USER', {email: this.config.email, password: this.config.password})
   },
 
   getHandicap: function () {
-    this.sendSocketNotification(Notifcations.GET_HANDICAP, this.config.ghinNumber)
+    this.sendSocketNotification('GET_HANDICAP', this.config.ghinNumber)
   },
 
   // Subclass socketNotificationReceived received.
   socketNotificationReceived: function (notification, payload) {
     // Login worked and we can now make proper requests
-    if (notification === Notifcations.LOGIN_SUCCESS) {
+    Log.info("Main module received notification: " + notification);
+    if (notification === 'LOGIN_SUCCESS') {
       this.getHandicap()
       this.scheduleUpdate()
-    } else if (notification === Notifcations.HANDICAP_RESULT) {
-      this.handicap = payload
+    } else if (notification === 'HANDICAP_RESULT') {
+      console.log(payload)
+      this.handicap = payload.golfers[0].hi_value
       this.updateDom()
     }
   },
