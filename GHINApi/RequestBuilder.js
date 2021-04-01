@@ -1,8 +1,4 @@
-import { USERNAME, PASSWORD } from './Constants'
-
-const addLogin = () => {
-  return `username=${USERNAME}&password=${PASSWORD}`
-}
+const Endpoints = require('./Endpoints')
 
 const addGHINNumber = (num) => {
   return `&ghinNumber=${num}`
@@ -36,6 +32,10 @@ const addDateBegin = (dateBegin) => {
   return `&DateBegin=${dateBegin}`
 }
 
+const addGolferId = (golferId) => {
+  return `golfer_id=${golferId}`
+}
+
 const addDateEnd = (dateEnd) => {
   return `&DateEnd=${dateEnd}`
 }
@@ -44,8 +44,20 @@ const addRevCount = (revCount) => {
   return `&revCount=${revCount}`
 }
 
-export function buildGolferRequest(ghinNumber, association = 0, club = 0, lastName, firstName, gender, activeOnly) {
-  let query = `?` + addLogin() + addGHINNumber(ghinNumber) + addAssociation(association) + addClub(club)
+const buildSearchGolfersRequest = (ghinNumber, lastName) => {
+  let query = `${Endpoints.SEARCH_GOLFERS_ENDPOINT}?` + addGolferId(ghinNumber)
+
+  if (lastName) {
+    query += addLastName(lastName)
+  }
+
+  query += `&page=1&per_page=100`
+
+  return query
+}
+
+const buildGolferRequest = (ghinNumber, association = 0, club = 0, lastName, firstName, gender, activeOnly) => {
+  let query = `?` + addGHINNumber(ghinNumber) + addAssociation(association) + addClub(club)
 
   if (lastName) {
     query += addLastName(lastName)
@@ -69,8 +81,32 @@ export function buildGolferRequest(ghinNumber, association = 0, club = 0, lastNa
   return query
 }
 
-export function buildHandicapHistoryRequest(ghinNumber, dateBegin, dateEnd, revCount = 0) {
+const buildHandicapHistoryRequest = (ghinNumber, dateBegin, dateEnd, revCount = 0) => {
   return (
-    `?` + addLogin() + addGHINNumber(ghinNumber) + addDateBegin(dateBegin) + addDateEnd(dateEnd) + addRevCount(revCount)
+    `golfers/${ghinNumber}/handicap_history.json?` + addDateBegin(dateBegin) + addDateEnd(dateEnd) + addRevCount(revCount)
   )
 }
+
+const buildScoresRequest = (ghinNumber) => {
+  return (
+    `golfers/${ghinNumber}/scores.json`
+  )
+}
+
+const buildLookupGolfersRequest = (searchCriteria, stateCode = 'CA') => {
+  let query = Endpoints.LOOKUP_GOLFERS_ENDPOINT + `?status=Active&from_ghin=true&per_page=25&sorting_criteria=full_name&order=asc&page=1&state=${stateCode}`
+
+  if (isNaN) {
+    query += addLastName(searchCriteria)
+  } else {
+    query += addGolferId(searchCriteria)
+  }
+
+  return query
+}
+
+exports.buildGolferRequest = buildGolferRequest
+exports.buildHandicapHistoryRequest = buildHandicapHistoryRequest
+exports.buildSearchGolfersRequest = buildSearchGolfersRequest
+exports.buildLookupGolfersRequest = buildLookupGolfersRequest
+exports.buildScoresRequest = buildScoresRequest

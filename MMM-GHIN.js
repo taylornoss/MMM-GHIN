@@ -1,3 +1,5 @@
+var Notifcations = require('./Notifications')
+
 /* Magic Mirror2
  * Module: GHIN
  *
@@ -10,6 +12,8 @@ Module.register('MMM-NFL', {
   defaults: {
     updateInterval: 1000 * 60,
     ghinNumber: 0,
+    email: '',
+    password: ''
   },
 
   getStyles: function () {
@@ -18,8 +22,7 @@ Module.register('MMM-NFL', {
 
   start: function () {
     Log.info('Starting module: ' + this.name)
-    this.getHandicap()
-    this.scheduleUpdate()
+    this.loginUser()
   },
 
   scheduleUpdate: function (delay) {
@@ -44,12 +47,21 @@ Module.register('MMM-NFL', {
     return wrapper
   },
 
-  getHandicap: function () {
-    this.sendSocketNotification('GET_HANDICAP', this.config.ghinNumber)
+  loginUser: function () {
+    this.sendSocketNotification(Notifcations.LOGIN_USER, this.config.ghinNumber)
   },
 
+  getHandicap: function () {
+    this.sendSocketNotification(Notifcations.GET_HANDICAP, this.config.ghinNumber)
+  },
+
+  // Subclass socketNotificationReceived received.
   socketNotificationReceived: function (notification, payload) {
-    if (notification === 'HANDICAP_RESULT') {
+    // Login worked and we can now make proper requests
+    if (notification === Notifcations.LOGIN_SUCCESS) {
+      this.getHandicap()
+      this.scheduleUpdate()
+    } else if (notification === Notifcations.HANDICAP_RESULT) {
       this.handicap = payload
       this.updateDom()
     }

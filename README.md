@@ -19,7 +19,9 @@ modules: [
     position: 'bottom_bar',
     config: {
       ghinNumber: '00000000', // Your GHIN Number
-      updateInterval: 37000, // update interval in milliseconds
+      updateInterval: 37000, // Update interval in milliseconds,
+      email: 'johndoe@gmail.com', // Your login email for GHIN
+      password: 'password', // Your login password for GHIN
     },
   },
 ]
@@ -31,6 +33,8 @@ modules: [
 - `position` where you want the handicap value to appear
 - `ghinNumber` Your specific GHIN Number
 - `updateInterval` default is set to 5 minutes
+- `email` Your email for logging in on your GHIN account
+- `password` Your password for logging in on your GHIN account
 
 ## ✨ Contributing
 
