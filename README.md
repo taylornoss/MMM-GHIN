@@ -3,8 +3,6 @@
 The `GHIN` module is a <a href="https://github.com/MichMich/MagicMirror">MagicMirror</a> addon.
 This module displays your official USGA handicap on your MagicMirror.
 
-** This module currently is not working due to the use of ES6 style imports **
-
 ## How to use this module
 
 1. Clone this repo with the following command: `git clone https://github.com/C-Deck/MMM-GHIN.git`
