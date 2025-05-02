@@ -1,0 +1,45 @@
+<header>
+    <div style="display:flex;justify-content:center">
+       <img src="./modules/MMM-GHIN/images/golf-ball-on-tee.png" class="logo"/><h1>GHIN Stats</h1>
+    </div>
+</header>
+{% if not loaded %}
+    <div class="dimmed light">{{ "LOADING" | translate }}</div>
+{% else %}
+    <table class="MMM-GHIN table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Course</th>
+                <th>Holes</th>
+                <th>Tee Box</th>
+                <th>Score</th>
+                <th>Differential</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for score in scores %}
+                <tr class="centered-row">
+                    <td class="">{{ score.played_at }}</td>
+                    <td>{{ score.course_display_value }}</td>
+                    <td>{{ score.number_of_played_holes }}</td>
+                    <td>{{ score.tee_name }}</td>
+                    
+                    <td>{{ score.adjusted_gross_score }}</td>
+                    {% if score.adjusted_scaled_up_differential != null %}
+                    <td>{{ score. adjusted_scaled_up_differential}} / {{ score.differential }}</td>
+                    {% else %}
+                    <td>{{ score.differential }}</td>
+                    {% endif %}
+                    <td></td>
+                </tr>
+                 {% else %}
+                <tr class="centered-row">
+                    <td colspan="7">No scores posted yet!</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

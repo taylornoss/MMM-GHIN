@@ -1,7 +1,0 @@
-exports.LOGIN_ENDPOINT = 'users/login.json'
-exports.LOGOUT_ENDPOINT = 'users/logout.json'
-exports.GHIN_API_ENDPOINT = 'https://api2.ghin.com/api/v1/'
-exports.LOOKUP_GOLFERS_ENDPOINT = 'golfers.json'
-exports.SEARCH_GOLFERS_ENDPOINT = 'golfers/search.json'
-exports.FOLLOWED_GOLFERS_ENDPOINT = 'followed_golfers/'
-exports.SEARCH_COURSE_ENDPOINT = 'courses/search.json'

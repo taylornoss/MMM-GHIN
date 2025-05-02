@@ -2,3 +2,21 @@
   color: rgb(179, 162, 162);
   font-size: 1.5rem;
 }
+
+.MMM-GHIN .logo {
+  max-width: 50px;
+  margin-right: 5px;
+}
+
+.MMM-GHIN th {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.MMM-GHIN .align-middle {
+  text-align: center;
+}
+
+.MMM-GHIN .centered-row>td {
+  text-align: center;
+}
