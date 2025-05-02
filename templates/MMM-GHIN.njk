@@ -6,20 +6,36 @@
 {% if not loaded %}
     <div class="dimmed light">{{ "LOADING" | translate }}</div>
 {% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>Current Handicap</th>
+                <th>Low Handicap</th> 
+                <th>Scoring Average</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="centered-row stats-row">
+                <td>{{ user.handicap_index }}</td>
+                <td>{{ user.low_hi }} <small>({{ user.low_hi_date }})</small></td>
+                <td>{{ stats.average }}</td>
+            </tr>
+        </tbody>
+    </table>
     <table class="MMM-GHIN table">
+    <caption class="align-middle">Most Recent Scores</caption>
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Course</th>
+                <th>Course Name</th>
                 <th>Holes</th>
                 <th>Tee Box</th>
                 <th>Score</th>
                 <th>Differential</th>
-                <th>Notes</th>
+                <th>PCC</th>
             </tr>
         </thead>
         <tbody>
-
             {% for score in scores %}
                 <tr class="centered-row">
                     <td class="">{{ score.played_at }}</td>
@@ -33,7 +49,11 @@
                     {% else %}
                     <td>{{ score.differential }}</td>
                     {% endif %}
-                    <td></td>
+                    <td>
+                     {% if score.pcc != 0 %}
+                        {{ score.adjustments[0].display }}
+                     {% endif %}
+                    </td>
                 </tr>
                  {% else %}
                 <tr class="centered-row">

@@ -15,6 +15,8 @@ Module.register('MMM-GHIN', {
   },
   scores: [],
   loaded : false,
+  user: {},
+  stats: {},
 
   getStyles: function () {
     return ['MMM-GHIN.css']
@@ -28,7 +30,8 @@ Module.register('MMM-GHIN', {
     return {
       loaded: this.loaded,
       scores: this.scores,
-      handicap: this.handicap,    
+      stats: this.stats,
+      user: this.user,    
       fns: { translate: this.translate.bind(this) }
     };
   },
@@ -68,7 +71,7 @@ Module.register('MMM-GHIN', {
 
     } else if (notification === 'MMM-GHIN-HANDICAP_RESULT') {
       console.log("USER INFO: " + JSON.stringify(payload));
-      this.handicap = payload.hi_value
+      this.user = payload;
       this.updateDom()
     }
     else if (notification == "MMM-GHIN-TOKEN_RECEIVED") {

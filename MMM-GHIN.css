@@ -4,7 +4,7 @@
 }
 
 .MMM-GHIN .logo {
-  max-width: 50px;
+  max-height: 50px;
   margin-right: 5px;
 }
 
@@ -19,4 +19,7 @@
 
 .MMM-GHIN .centered-row>td {
   text-align: center;
+}
+.MMM-GHIN .stats-row>td {
+  font-size: 2rem;
 }
