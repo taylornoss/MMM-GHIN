@@ -8,7 +8,7 @@ Module.register('MMM-GHIN', {
   handicap: 0.0,
   // Default module config.
   defaults: {
-    updateInterval: (1000 * 60 * 60), //every hour
+    updateInterval: (1000 * 60 * 60) * 6, //every 6 hours
     ghinNumber: 0,
     email: '',
     password: ''

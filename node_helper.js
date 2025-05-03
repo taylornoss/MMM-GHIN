@@ -25,7 +25,7 @@ module.exports = NodeHelper.create({
 
   // Log In User
   async GetUserToken(email, password) {
-    Log.log('Getting user token...');
+    Log.log('MMM-GHIN: Getting user token...');
     const url = `${Endpoints.GHIN_API_ENDPOINT}${Endpoints.LOGIN_ENDPOINT}`;
     const user = {
       email_or_ghin: email,
@@ -38,7 +38,7 @@ module.exports = NodeHelper.create({
     }
     try {
       let bodyData = JSON.stringify(requestBody);
-      Log.debug("Calling " + url + " with body: " + bodyData);
+      Log.debug("MMM-GHIN: Calling " + url + " with body: " + bodyData);
       const response = await fetch(url, {
         method: "POST",
         body: bodyData,
@@ -48,21 +48,21 @@ module.exports = NodeHelper.create({
       });
       if (!response.ok) {
         var errors = await response.json();
-        Log.error(errors);
+        Log.error('MMM-GHIN: '+errors);
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
       return json.golfer_user.golfer_user_token;
     } catch (error) {
-      Log.error(error.message);
+      Log.error('MMM-GHIN: '+error.message);
     }
   },
 
   async GetScores(token, id) {
-    Log.log('Getting user scores...');
+    Log.log('MMM-GHIN: Getting user scores...');
     try {
       let scoreURL =`${Endpoints.GHIN_API_ENDPOINT}golfers/${id}/scores.json` //`https://api2.ghin.com/api/v1/golfers/{ID}/scores.json`;
-      Log.debug("Calling " + scoreURL);
+      Log.debug("MMM-GHIN: Calling " + scoreURL);
       let response = await fetch(scoreURL, {
         method: "GET",
         headers: {
@@ -72,7 +72,7 @@ module.exports = NodeHelper.create({
       });
       if (!response.ok) {
         var errors = await response.text();
-        Log.error(errors);
+        Log.error('MMM-GHIN: '+errors);
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
@@ -81,11 +81,11 @@ module.exports = NodeHelper.create({
       returnData.stats = json.score_history_stats;
       return returnData;
     } catch (error) {
-      Log.error(error.message);
+      Log.error('MMM-GHIN: '+error.message);
     }
   },
   async GetGolfer(token, id) {
-    Log.log('Getting user information...');
+    Log.log('MMM-GHIN: Getting user information...');
     try {
       const params = new URLSearchParams();
       params.append("golfer_id", id);
@@ -94,7 +94,7 @@ module.exports = NodeHelper.create({
       params.append("status", "Active");
 
       let golferURL = `${Endpoints.GHIN_API_ENDPOINT}${Endpoints.SEARCH_GOLFERS_ENDPOINT}?${params}` //`https://api2.ghin.com/api/v1/golfers/search.json?${params}`;
-      Log.debug("Calling " + golferURL);
+      Log.debug("MMM-GHIN: Calling " + golferURL);
       let response = await fetch(golferURL, {
         method: "GET",
         headers: {
@@ -104,56 +104,56 @@ module.exports = NodeHelper.create({
       });
       if (!response.ok) {
         var errors = await response.text();
-        Log.error(errors);
+        Log.error('MMM-GHIN: '+errors);
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
       return json.golfers[0];
     } catch (error) {
-      Log.error(error.message);
+      Log.error('MMM-GHIN: '+error.message);
     }
   },
 
   // Subclass socketNotificationReceived received.
   socketNotificationReceived: function (notification, data) {
     if (notification === Notifcations.GET_TOKEN) {
-      Log.log('GET_TOKEN REQUEST RECEIVED');
+      Log.log('MMM-GHIN: GET_TOKEN REQUEST RECEIVED');
       this.GetUserToken(data.email, data.password).then((token) => this.sendSocketNotification(Notifcations.TOKEN_RECEIVED, token))
     }
     else if (notification === Notifcations.GET_HANDICAP) {
-      Log.log('GET_HANDICAP REQUEST RECEIVED');
+      Log.log('MMM-GHIN: GET_HANDICAP REQUEST RECEIVED');
       this.GetUserToken(data.email, data.password).then((token) => {
-        Log.log('TOKEN ACQUIRED');
+        Log.log('MMM-GHIN: TOKEN ACQUIRED');
         this.GetGolfer(token, data.id).then((user) => {
-          Log.log('Completed retrieving user');
-          Log.debug(JSON.stringify(user));
+          Log.log(' MMM-GHIN:Completed retrieving user');
+          Log.debug('MMM-GHIN: '+JSON.stringify(user));
           this.sendSocketNotification(Notifcations.HANDICAP_RESULT, user)
         });
       });
     }
     else if (notification === Notifcations.GET_SCORES) {
-      Log.log('GET_SCORES REQUEST RECEIVED');
+      Log.log('MMM-GHIN: GET_SCORES REQUEST RECEIVED');
       this.GetUserToken(data.email, data.password).then((token) => {
-        Log.log('TOKEN ACQUIRED');
+        Log.log('MMM-GHIN: TOKEN ACQUIRED');
         this.GetScores(token, data.id).then((scores) => {
-          Log.log('Completed retrieving scores');
-          Log.debug(JSON.stringify(scores));
+          Log.log('MMM-GHIN: Completed retrieving scores');
+          Log.debug('MMM-GHIN: '+JSON.stringify(scores));
           this.sendSocketNotification(Notifcations.SCORE_RESULT, scores)
         });
       });
     }
     else if (notification === Notifcations.REFRESH_ALL) {
-      Log.log('REFRESH_ALL REQUEST RECEIVED');
+      Log.log('MMM-GHIN: REFRESH_ALL REQUEST RECEIVED');
       this.GetUserToken(data.email, data.password).then((token) => {
-        Log.log('TOKEN ACQUIRED');
+        Log.log('MMM-GHIN: TOKEN ACQUIRED');
         this.GetScores(token, data.id).then((scores) => {
-          Log.log('Completed retrieving scores');
-          Log.debug(JSON.stringify(scores));
+          Log.log('MMM-GHIN: Completed retrieving scores');
+          Log.debug('MMM-GHIN: '+JSON.stringify(scores));
           this.sendSocketNotification(Notifcations.SCORE_RESULT, scores)
         });
         this.GetGolfer(token, data.id).then((user) => {
-          Log.log('Completed retrieving user');
-          Log.debug(JSON.stringify(user));
+          Log.log('MMM-GHIN: Completed retrieving user');
+          Log.debug('MMM-GHIN: '+JSON.stringify(user));
           this.sendSocketNotification(Notifcations.HANDICAP_RESULT, user)
         });
       });

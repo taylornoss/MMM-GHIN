@@ -114,7 +114,7 @@
 
 .MMM-GHIN .table-wrapper {
   overflow: auto;
-  height: calc(100vh - 175px);
+  height: calc(100vh - 260px);
 }
 
 .MMM-GHIN .fixed-header th {
