@@ -22,9 +22,10 @@
             </tr>
         </tbody>
     </table>
-    <table class="MMM-GHIN table">
-    <caption class="align-middle">Most Recent Scores</caption>
-        <thead>
+    <div class="table-wrapper">
+    <table class="scores-table table">
+        <caption class="align-middle">Most Recent Scores</caption>
+        <thead class="fixed-header">
             <tr>
                 <th>Date</th>
                 <th>Course Name</th>
@@ -55,11 +56,58 @@
                      {% endif %}
                     </td>
                 </tr>
-                 {% else %}
+                {% if score.hole_details.length > 0%}
+                <tr class="">
+                    <td colspan="7">
+                    <table class="xsmall hole-by-hole">
+                     <caption>Hole by Hole</caption>
+                        <thead>
+                            <tr>
+                                <th class="start">Hole</th>
+                                {% for hole in score.hole_details %}
+                                <th>{{ hole.hole_number }}</th>
+                                {% endfor %}
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr class="centered-row">
+                                <td class="start"><strong>Score</strong></td>
+                                {% for hole in score.hole_details %}
+                                {% if  hole.adjusted_gross_score == hole.par %}
+                                    {% set par = "par" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par + 1) %}
+                                    {% set par = "bogey" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par + 2) %}
+                                    {% set par = "double-bogey" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par + 3) %}
+                                    {% set par = "triple-bogey" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par - 1) %}
+                                    {% set par = "birdie" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par - 2) %}
+                                    {% set par = "eagle" %}
+                                {% else %}
+                                    {% set par = "unknown" %}
+                                {% endif %}
+                                <td>                                 
+                                    <span class="{{ par }}">
+                                    {{ hole.adjusted_gross_score }}
+                                    </span>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+                {% else %}
+                {% endif %}
+            {% else %}
                 <tr class="centered-row">
                     <td colspan="7">No scores posted yet!</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endif %}

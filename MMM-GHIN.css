@@ -8,7 +8,7 @@
   margin-right: 5px;
 }
 
-.MMM-GHIN th {
+.MMM-GHIN.scores-table th {
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -20,6 +20,105 @@
 .MMM-GHIN .centered-row>td {
   text-align: center;
 }
+
 .MMM-GHIN .stats-row>td {
   font-size: 2rem;
+}
+
+.MMM-GHIN .hole-by-hole td,
+.MMM-GHIN .hole-by-hole th {
+  padding-left: 5px;
+  padding-right: 5px;
+  border-left: 0;
+  border-style: solid;
+  border-collapse: collapse;
+}
+.MMM-GHIN .hole-by-hole td{
+  border-top: 0 !important;
+}
+
+.MMM-GHIN .hole-by-hole .start {
+  border-left: 1.5px !important;
+  border-left-style: solid !important;
+}
+
+.MMM-GHIN .hole-by-hole {
+  background-color: black;
+}
+
+.MMM-GHIN .hole-by-hole td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.MMM-GHIN .bogey {
+  border-style: solid;
+  padding: 1px 3px;
+}
+
+.MMM-GHIN .birdie {
+  border-color: red !important;
+  border-style: solid;
+  padding: 1px 6px;
+  border-radius: 50%;
+}
+
+.MMM-GHIN .double-bogey {
+  border: solid;
+  padding: 1px 6px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.MMM-GHIN .double-bogey::before {
+  background: none;
+  border: solid;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  pointer-events: none;
+}
+
+.MMM-GHIN .eagle {
+  border-color: red !important;
+  border: solid;
+  padding: 1px 6px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.MMM-GHIN .eagle::before {
+  border-color: red !important;
+  background: none;
+  border: solid;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.MMM-GHIN .hide {
+  display: none;
+}
+
+.MMM-GHIN .table-wrapper {
+  overflow: auto;
+  height: calc(100vh - 175px);
+}
+
+.MMM-GHIN .fixed-header th {
+  position: sticky;
+  top: 0;
+  background-color: black;
+  z-index: 1000;
 }
