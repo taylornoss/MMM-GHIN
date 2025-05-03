@@ -38,12 +38,15 @@
         </thead>
         <tbody>
             {% for score in scores %}
-                <tr class="centered-row">
+              {% if score.hole_details.length > 0 %}
+               <tr class="centered-row clickable expandable collapsed" data-bs-toggle="collapse" data-bs-target="#scores-{{ score.id }}">
+               {% else %}
+               <tr class="centered-row">
+               {% endif%}
                     <td class="">{{ score.played_at }}</td>
                     <td>{{ score.course_display_value }}</td>
                     <td>{{ score.number_of_played_holes }}</td>
                     <td>{{ score.tee_name }}</td>
-                    
                     <td>{{ score.adjusted_gross_score }}</td>
                     {% if score.adjusted_scaled_up_differential != null %}
                     <td>{{ score. adjusted_scaled_up_differential}} / {{ score.differential }}</td>
@@ -56,8 +59,8 @@
                      {% endif %}
                     </td>
                 </tr>
-                {% if score.hole_details.length > 0%}
-                <tr class="">
+                {% if score.hole_details.length > 0 %}
+                <tr class="collapse" id="scores-{{ score.id }}">
                     <td colspan="7">
                     <table class="xsmall hole-by-hole">
                      <caption>Hole by Hole</caption>
@@ -68,7 +71,6 @@
                                 <th>{{ hole.hole_number }}</th>
                                 {% endfor %}
                             </tr>
-
                         </thead>
                         <tbody>
                             <tr class="centered-row">
@@ -91,7 +93,11 @@
                                 {% endif %}
                                 <td>                                 
                                     <span class="{{ par }}">
-                                    {{ hole.adjusted_gross_score }}
+                                        {% if hole.adjusted_gross_score == 0 %}
+                                        X
+                                        {% else %}
+                                        {{ hole.adjusted_gross_score }}
+                                        {% endif %}
                                     </span>
                                 </td>
                                 {% endfor %}

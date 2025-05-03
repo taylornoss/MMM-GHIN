@@ -14,7 +14,7 @@ Module.register('MMM-GHIN', {
     password: ''
   },
   scores: [],
-  loaded : false,
+  loaded: false,
   user: {},
   stats: {},
 
@@ -22,6 +22,9 @@ Module.register('MMM-GHIN', {
     return ['MMM-GHIN.css']
   },
 
+  getScripts: function () {
+    return ["modules/MMM-GHIN/bootstrap/js/bootstrap.min.js"];
+  },
   getTemplate() {
     return `templates/${this.name}.njk`;
   },
@@ -31,7 +34,7 @@ Module.register('MMM-GHIN', {
       loaded: this.loaded,
       scores: this.scores,
       stats: this.stats,
-      user: this.user,    
+      user: this.user,
       fns: { translate: this.translate.bind(this) }
     };
   },
@@ -41,10 +44,10 @@ Module.register('MMM-GHIN', {
     setInterval(() => {
       console.log("Refreshing MMM-GHIN data...");
       this.updateAll();
-  }, this.config.updateInterval);
+    }, this.config.updateInterval);
   },
 
-   loginUser: function () {
+  loginUser: function () {
     Log.info("Called login");
     this.sendSocketNotification('MMM-GHIN-GET_TOKEN', { email: this.config.email, password: this.config.password, id: this.config.ghinNumber });
   },

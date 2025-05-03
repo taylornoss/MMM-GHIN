@@ -33,7 +33,8 @@
   border-style: solid;
   border-collapse: collapse;
 }
-.MMM-GHIN .hole-by-hole td{
+
+.MMM-GHIN .hole-by-hole td {
   border-top: 0 !important;
 }
 
@@ -121,4 +122,28 @@
   top: 0;
   background-color: black;
   z-index: 1000;
+}
+
+/*
+  BOOTSTRAP CLASSES
+*/
+.collapse:not(.show) {
+  display: none;
+}
+
+.collapsing {
+  height: 0;
+  overflow: hidden;
+}
+
+.expandable:not(.collapsed)::after {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f077";
+}
+
+.expandable:after {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f078";
 }
