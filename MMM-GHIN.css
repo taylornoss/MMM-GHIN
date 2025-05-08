@@ -164,6 +164,9 @@
 .MMM-GHIN .pending > td {
   color:goldenrod;
 }
+.MMM-GHIN .used > td {
+  color:green;
+}
 /*
   BOOTSTRAP CLASSES
 */

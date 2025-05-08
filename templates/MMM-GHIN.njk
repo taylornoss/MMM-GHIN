@@ -110,10 +110,14 @@
                 {% endif %}
             {% endfor %} 
             {% for score in scores %}
+             {% set class='' %}
+                {% if score.used %}
+                {% set class='used' %}
+                {% endif %}
               {% if score.hole_details.length > 0 %}
-               <tr class="centered-row clickable expandable collapsed" data-bs-toggle="collapse" data-bs-target="#scores-{{ score.id }}">
+               <tr class="centered-row clickable expandable collapsed {{ class }}" data-bs-toggle="collapse" data-bs-target="#scores-{{ score.id }}">
                {% else %}
-               <tr class="centered-row">
+               <tr class="centered-row {{ class }}">
                {% endif%}
                     <td class="">{{ score.played_at }}</td>
                     <td>{{ score.course_display_value }}</td>
