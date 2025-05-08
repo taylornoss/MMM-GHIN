@@ -78,6 +78,7 @@ module.exports = NodeHelper.create({
       const json = await response.json();
       var returnData = new Object();
       returnData.scores = json.revision_scores.scores;
+      returnData.pending_scores = json.recent_scores.scores;
       returnData.stats = json.score_history_stats;
       return returnData;
     } catch (error) {

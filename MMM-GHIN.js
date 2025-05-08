@@ -14,6 +14,7 @@ Module.register('MMM-GHIN', {
     password: ''
   },
   scores: [],
+  pending_scores: [],
   loaded: false,
   user: {},
   stats: {},
@@ -33,6 +34,7 @@ Module.register('MMM-GHIN', {
     return {
       loaded: this.loaded,
       scores: this.scores,
+      pending_scores: this.pending_scores,
       stats: this.stats,
       user: this.user,
       fns: { translate: this.translate.bind(this) }
@@ -84,6 +86,7 @@ Module.register('MMM-GHIN', {
     else if (notification == "MMM-GHIN-SCORE_RESULT") {
       console.log("SCORES RECEIVED: " + JSON.stringify(payload));
       this.scores = payload.scores;
+      this.pending_scores = payload.pending_scores;
       this.stats = payload.stats;
       this.scores.forEach(score => {
         console.log(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)

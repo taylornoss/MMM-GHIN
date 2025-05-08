@@ -37,6 +37,78 @@
             </tr>
         </thead>
         <tbody>
+            {% for score in pending_scores %}
+                {% if score.hole_details.length > 0 %}
+               <tr class="centered-row clickable expandable collapsed pending" data-bs-toggle="collapse" data-bs-target="#scores-{{ score.id }}">
+               {% else %}
+               <tr class="centered-row pending">
+               {% endif%}
+                    <td class="">{{ score.played_at }}</td>
+                    <td>{{ score.course_display_value }}</td>
+                    <td>{{ score.number_of_played_holes }}</td>
+                    <td>{{ score.tee_name }}</td>
+                    <td>{{ score.adjusted_gross_score }}</td>
+                    {% if score.adjusted_scaled_up_differential != null %}
+                    <td>{{ score. adjusted_scaled_up_differential}} / {{ score.differential }}</td>
+                    {% else %}
+                    <td>{{ score.differential }}</td>
+                    {% endif %}
+                    <td>
+                     {% if score.pcc != 0 %}
+                        {{ score.adjustments[0].display }}
+                     {% endif %}
+                    </td>
+                </tr>
+                {% if score.hole_details.length > 0 %}
+                <tr class="collapse pending" id="scores-{{ score.id }}">
+                    <td colspan="7">
+                    <table class="xsmall hole-by-hole">
+                     <caption>Hole by Hole</caption>
+                        <thead>
+                            <tr>
+                                <th class="start">Hole</th>
+                                {% for hole in score.hole_details %}
+                                <th>{{ hole.hole_number }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="centered-row">
+                                <td class="start"><strong>Score</strong></td>
+                                {% for hole in score.hole_details %}
+                                {% if  hole.adjusted_gross_score == hole.par %}
+                                    {% set par = "par" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par + 1) %}
+                                    {% set par = "bogey" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par + 2) %}
+                                    {% set par = "double-bogey" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par + 3) %}
+                                    {% set par = "triple-bogey" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par - 1) %}
+                                    {% set par = "birdie" %}
+                                {%  elif hole.adjusted_gross_score == (hole.par - 2) %}
+                                    {% set par = "eagle" %}
+                                {% else %}
+                                    {% set par = "unknown" %}
+                                {% endif %}
+                                <td>                                 
+                                    <span class="{{ par }}">
+                                        {% if hole.adjusted_gross_score == 0 %}
+                                        X
+                                        {% else %}
+                                        {{ hole.adjusted_gross_score }}
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+                {% else %}
+                {% endif %}
+            {% endfor %} 
             {% for score in scores %}
               {% if score.hole_details.length > 0 %}
                <tr class="centered-row clickable expandable collapsed" data-bs-toggle="collapse" data-bs-target="#scores-{{ score.id }}">
