@@ -152,7 +152,7 @@
 
 .MMM-GHIN .table-wrapper {
   overflow: auto;
-  height: calc(100vh - 260px);
+  height: calc(100vh - 232px);
 }
 
 .MMM-GHIN .fixed-header th {
