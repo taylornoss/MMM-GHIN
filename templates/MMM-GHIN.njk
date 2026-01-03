@@ -69,6 +69,12 @@
                                 <th class="start">Hole</th>
                                 {% for hole in score.hole_details %}
                                 <th>{{ hole.hole_number }}</th>
+                                {% if hole.hole_number == 9 %}
+                                <th>Out</th>
+                                {% endif %}
+                                {% if hole.hole_number == 18 %}
+                                <th>In</th>
+                                {% endif %}
                                 {% endfor %}
                             </tr>
                         </thead>
@@ -100,6 +106,12 @@
                                         {% endif %}
                                     </span>
                                 </td>
+                                {% if hole.hole_number == 9 %}
+                                <td>{{ score.front_total }}</td>
+                                {% endif %}
+                                {% if hole.hole_number == 18 %}
+                                <td>{{ score.back_total }}</td>
+                                {% endif %}
                                 {% endfor %}
                             </tr>
                         </tbody>
@@ -145,6 +157,12 @@
                                 <th class="start">Hole</th>
                                 {% for hole in score.hole_details %}
                                 <th>{{ hole.hole_number }}</th>
+                                {% if hole.hole_number == 9 %}
+                                <th>Out</th>
+                                {% endif %}
+                                {% if hole.hole_number == 18 %}
+                                <th>In</th>
+                                {% endif %}
                                 {% endfor %}
                             </tr>
                         </thead>
@@ -174,8 +192,15 @@
                                         {% else %}
                                         {{ hole.adjusted_gross_score }}
                                         {% endif %}
+                                       
                                     </span>
                                 </td>
+                                {% if hole.hole_number == 9 %}
+                                <td>{{ score.front_total }}</td>
+                                {% endif %}
+                                {% if hole.hole_number == 18 %}
+                                <td>{{ score.back_total }}</td>
+                                {% endif %}
                                 {% endfor %}
                             </tr>
                         </tbody>
