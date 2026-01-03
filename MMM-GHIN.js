@@ -89,7 +89,36 @@ Module.register('MMM-GHIN', {
       this.pending_scores = payload.pending_scores;
       this.stats = payload.stats;
       this.scores.forEach(score => {
+        var front = 0;
+        var back = 0;
         console.log(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)
+        score.hole_details.forEach(hole => {
+          if(hole.hole_number <= 9){
+            front += hole.adjusted_gross_score;
+          }
+          else{
+            back += hole.adjusted_gross_score;
+
+          }
+          score.front_total = front;
+          score.back_total = back;
+        });
+      });
+       this.pending_scores.forEach(score => {
+        var front = 0;
+        var back = 0;
+        console.log(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)
+        score.hole_details.forEach(hole => {
+          if(hole.hole_number <= 9){
+            front += hole.adjusted_gross_score;
+          }
+          else{
+            back += hole.adjusted_gross_score;
+
+          }
+          score.front_total = front;
+          score.back_total = back;
+        });
       });
       this.loaded = true;
       this.updateDom();
