@@ -180,13 +180,13 @@
 }
 
 .expandable:not(.collapsed)::after {
-  font-family: "Font Awesome 6 Free";
+  font-family: "Font Awesome 7 Free";
   font-weight: 900;
   content: "\f077";
 }
 
 .expandable:after {
-  font-family: "Font Awesome 6 Free";
+  font-family: "Font Awesome 7 Free";
   font-weight: 900;
   content: "\f078";
 }
