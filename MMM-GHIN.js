@@ -50,7 +50,7 @@ Module.register('MMM-GHIN', {
   },
 
   loginUser: function () {
-    Log.info("Called login");
+    Log.debug("Called login");
     this.sendSocketNotification('MMM-GHIN-GET_TOKEN', { email: this.config.email, password: this.config.password, id: this.config.ghinNumber });
   },
 
@@ -59,7 +59,7 @@ Module.register('MMM-GHIN', {
   },
 
   getScores: function () {
-    Log.info("Called getScores");
+    Log.debug("Called getScores");
     this.sendSocketNotification('MMM-GHIN-GET_SCORES', { email: this.config.email, password: this.config.password, id: this.config.ghinNumber });
   },
 
@@ -75,23 +75,23 @@ Module.register('MMM-GHIN', {
       this.getHandicap()
 
     } else if (notification === 'MMM-GHIN-HANDICAP_RESULT') {
-      console.log("USER INFO: " + JSON.stringify(payload));
+      Log.debug("USER INFO: " + JSON.stringify(payload));
       this.user = payload;
       this.updateDom()
     }
     else if (notification == "MMM-GHIN-TOKEN_RECEIVED") {
-      console.log("TOKEN RECEIVED: " + payload);
+      Log.debug("TOKEN RECEIVED: " + payload);
       this.getScores(payload);
     }
     else if (notification == "MMM-GHIN-SCORE_RESULT") {
-      console.log("SCORES RECEIVED: " + JSON.stringify(payload));
+      Log.debug("SCORES RECEIVED: " + JSON.stringify(payload));
       this.scores = payload.scores;
       this.pending_scores = payload.pending_scores;
       this.stats = payload.stats;
       this.scores.forEach(score => {
         var front = 0;
         var back = 0;
-        console.log(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)
+        Log.debug(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)
         score.hole_details.forEach(hole => {
           if(hole.hole_number <= 9){
             front += hole.adjusted_gross_score;
@@ -106,7 +106,7 @@ Module.register('MMM-GHIN', {
        this.pending_scores.forEach(score => {
         var front = 0;
         var back = 0;
-        console.log(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)
+        Log.debug(`You shot ${score.adjusted_gross_score} in ${score.number_of_played_holes} holes on ${score.played_at} at ${score.course_display_value} from the ${score.tee_name}`)
         score.hole_details.forEach(hole => {
           if(hole.hole_number <= 9){
             front += hole.adjusted_gross_score;
